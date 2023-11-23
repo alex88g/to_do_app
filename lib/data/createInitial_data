@@ -1,0 +1,39 @@
+import 'package:sqflite/sqflite.dart';
+import 'package:path/path.dart';
+//Data modell
+
+// Importera 'database_helper.dart' som innehåller databaslogik
+import 'database_helper.dart';
+
+// Importera 'ImagePickerWidget' klassen för att använda den senare
+import 'image_picker_widget.dart';
+
+// Importera 'ImagePicker' för att använda bildplockningsfunktionalitet
+import 'package:image_picker/image_picker.dart';
+
+// Model: ToDo är modellen som representerar en uppgift med dess egenskaper.
+// Klassen representerar en uppgift (ToDo-objekt) i applikation
+class ToDo {
+  final int id; // Unikt ID för uppgiften
+  final String taskName; // Namn eller beskrivning av uppgiften
+  final bool taskCompleted; // Anger om uppgiften är slutförd eller inte
+  final String? imagePath; // Sökväg till en valfri bild relaterad till uppgiften
+
+  // Konstruktor för att skapa en ny ToDo
+  ToDo({
+    required this.id,
+    required this.taskName,
+    required this.taskCompleted,
+    this.imagePath, // Om det finns en bild kopplad till uppgiften
+  });
+
+  // Metod för att konvertera ToDo-objektet till en Map för databaslagring
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id, // Unikt ID för uppgiften
+      'task': taskName, // Namn eller beskrivning av uppgiften
+      'completed': taskCompleted ? 1 : 0, // 1 om uppgiften är slutförd, annars 0
+      'imagePath': imagePath, // Sökväg till bild (kan vara null om ingen bild finns)
+    };
+  }
+}
